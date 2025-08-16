@@ -8,7 +8,9 @@
     "npm:@lazy_engineer/my-lib-linux-x64@1": "1.0.0",
     "npm:@lazy_engineer/my-lib-win32-arm64@1": "1.0.0",
     "npm:@lazy_engineer/my-lib-win32-x64@1": "1.0.0",
-    "npm:@types/node@*": "24.2.0"
+    "npm:@types/bun@latest": "1.2.20",
+    "npm:@types/node@*": "24.2.0",
+    "npm:ts-proto@^2.7.7": "2.7.7"
   },
   "npm": {
     "@bufbuild/protobuf@2.6.3": {
@@ -44,11 +46,68 @@
       "os": ["win32"],
       "cpu": ["x64"]
     },
+    "@types/bun@1.2.20": {
+      "integrity": "sha512-dX3RGzQ8+KgmMw7CsW4xT5ITBSCrSbfHc36SNT31EOUg/LA9JWq0VDdEXDRSe1InVWpd2yLUM1FUF/kEOyTzYA==",
+      "dependencies": [
+        "bun-types"
+      ]
+    },
     "@types/node@24.2.0": {
       "integrity": "sha512-3xyG3pMCq3oYCNg7/ZP+E1ooTaGB4cG8JWRsqqOYQdbWNY4zbaV0Ennrd7stjiJEFZCaybcIgpTjJWHRfBSIDw==",
       "dependencies": [
         "undici-types"
       ]
+    },
+    "@types/react@19.1.10": {
+      "integrity": "sha512-EhBeSYX0Y6ye8pNebpKrwFJq7BoQ8J5SO6NlvNwwHjSj6adXJViPQrKlsyPw7hLBLvckEMO1yxeGdR82YBBlDg==",
+      "dependencies": [
+        "csstype"
+      ]
+    },
+    "bun-types@1.2.20_@types+react@19.1.10": {
+      "integrity": "sha512-pxTnQYOrKvdOwyiyd/7sMt9yFOenN004Y6O4lCcCUoKVej48FS5cvTw9geRaEcB9TsDZaJKAxPTVvi8tFsVuXA==",
+      "dependencies": [
+        "@types/node",
+        "@types/react"
+      ]
+    },
+    "case-anything@2.1.13": {
+      "integrity": "sha512-zlOQ80VrQ2Ue+ymH5OuM/DlDq64mEm+B9UTdHULv5osUMD6HalNTblf2b1u/m6QecjsnOkBpqVZ+XPwIVsy7Ng=="
+    },
+    "csstype@3.1.3": {
+      "integrity": "sha512-M1uQkMl8rQK/szD0LNhtqxIPLpimGm8sOBwU7lLnCpSbTyY3yeU1Vc7l4KT5zT4s/yOxHH5O7tIuuLOCnLADRw=="
+    },
+    "detect-libc@1.0.3": {
+      "integrity": "sha512-pGjwhsmsp4kL2RTz08wcOlGN83otlqHeD/Z5T8GXZB+/YcpQ/dgo+lbU8ZsGxV0HIvqqxo9l7mqYwyYMD9bKDg==",
+      "bin": true
+    },
+    "dprint-node@1.0.8": {
+      "integrity": "sha512-iVKnUtYfGrYcW1ZAlfR/F59cUVL8QIhWoBJoSjkkdua/dkWIgjZfiLMeTjiB06X0ZLkQ0M2C1VbUj/CxkIf1zg==",
+      "dependencies": [
+        "detect-libc"
+      ]
+    },
+    "ts-poet@6.12.0": {
+      "integrity": "sha512-xo+iRNMWqyvXpFTaOAvLPA5QAWO6TZrSUs5s4Odaya3epqofBu/fMLHEWl8jPmjhA0s9sgj9sNvF1BmaQlmQkA==",
+      "dependencies": [
+        "dprint-node"
+      ]
+    },
+    "ts-proto-descriptors@2.0.0": {
+      "integrity": "sha512-wHcTH3xIv11jxgkX5OyCSFfw27agpInAd6yh89hKG6zqIXnjW9SYqSER2CVQxdPj4czeOhGagNvZBEbJPy7qkw==",
+      "dependencies": [
+        "@bufbuild/protobuf"
+      ]
+    },
+    "ts-proto@2.7.7": {
+      "integrity": "sha512-/OfN9/Yriji2bbpOysZ/Jzc96isOKz+eBTJEcKaIZ0PR6x1TNgVm4Lz0zfbo+J0jwFO7fJjJyssefBPQ0o1V9A==",
+      "dependencies": [
+        "@bufbuild/protobuf",
+        "case-anything",
+        "ts-poet",
+        "ts-proto-descriptors"
+      ],
+      "bin": true
     },
     "undici-types@7.10.0": {
       "integrity": "sha512-t5Fy/nfn+14LuOc2KNYg75vZqClpAiqscVvMygNnlsHBFpSXdJaYtXMcdNLpl/Qvc3P2cB3s6lOV51nqsFq4ag=="
@@ -63,6 +122,13 @@
       "npm:@lazy_engineer/my-lib-linux-x64@1",
       "npm:@lazy_engineer/my-lib-win32-arm64@1",
       "npm:@lazy_engineer/my-lib-win32-x64@1"
-    ]
+    ],
+    "packageJson": {
+      "dependencies": [
+        "npm:@bufbuild/protobuf@^2.6.3",
+        "npm:@types/bun@latest",
+        "npm:ts-proto@^2.7.7"
+      ]
+    }
   }
 }

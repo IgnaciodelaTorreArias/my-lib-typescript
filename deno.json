@@ -1,0 +1,28 @@
+{
+  "name": "@lazy-engineer/my-lib",
+  "version": "0.1.0",
+  "description": "A Deno library for demonstration purposes",
+  "license": "GLWTPL",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "publish": {
+    "include": [
+      "src",
+      "deno.json",
+      "README.md"
+    ]
+  },
+  "tasks": {
+    "dev": "deno run --watch main.ts"
+  },
+  "imports": {
+    "@bufbuild/protobuf": "npm:@bufbuild/protobuf@^2.6.3",
+    "@lazy_engineer/my-lib-darwin-arm64": "npm:@lazy_engineer/my-lib-darwin-arm64@^1.0.0",
+    "@lazy_engineer/my-lib-darwin-x64": "npm:@lazy_engineer/my-lib-darwin-x64@^1.0.0",
+    "@lazy_engineer/my-lib-linux-arm64": "npm:@lazy_engineer/my-lib-linux-arm64@^1.0.0",
+    "@lazy_engineer/my-lib-linux-x64": "npm:@lazy_engineer/my-lib-linux-x64@^1.0.0",
+    "@lazy_engineer/my-lib-win32-arm64": "npm:@lazy_engineer/my-lib-win32-arm64@^1.0.0",
+    "@lazy_engineer/my-lib-win32-x64": "npm:@lazy_engineer/my-lib-win32-x64@^1.0.0"
+  }
+}

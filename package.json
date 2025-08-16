@@ -1,6 +1,6 @@
 {
   "name": "@lazy-engineer/my-lib",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A Deno & Bun library for demonstration purposes",
   "license": "GLWTPL",
   "module": "index.ts",

@@ -1,0 +1,35 @@
+{
+  "name": "@lazy-engineer/my-lib",
+  "version": "0.1.0",
+  "description": "A Deno & Bun library for demonstration purposes",
+  "license": "GLWTPL",
+  "module": "index.ts",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "files": [
+    "src/"
+  ],
+  "scripts": {
+    "generate": "protoc --plugin=protoc-gen-ts_proto=.\\node_modules\\.bin\\protoc-gen-ts_proto.cmd --ts_proto_out=.\\src\\generated --ts_proto_opt=esModuleInterop=true,forceLong=string --proto_path=.\\my_rust_protos\\protos module.proto"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "ts-proto": "^2.7.7"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@bufbuild/protobuf": "^2.6.3"
+  },
+  "optionalDependencies": {
+    "@lazy_engineer/my-lib-darwin-arm64": "^1.0.0",
+    "@lazy_engineer/my-lib-darwin-x64": "^1.0.0",
+    "@lazy_engineer/my-lib-linux-arm64": "^1.0.0",
+    "@lazy_engineer/my-lib-linux-x64": "^1.0.0",
+    "@lazy_engineer/my-lib-win32-arm64": "^1.0.0",
+    "@lazy_engineer/my-lib-win32-x64": "^1.0.0"
+  }
+}

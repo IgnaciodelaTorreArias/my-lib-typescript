@@ -1,28 +1,61 @@
+import { Buffer } from "node:buffer";
 import { fileURLToPath } from "node:url";
 import * as e from "./generated/error.ts";
 
+let ffi: typeof import("bun:ffi") 
+const isDeno = typeof Deno !== "undefined" && typeof Deno.version !== "undefined";
+const isBun = typeof Bun !== "undefined" && typeof Bun.version !== "undefined";
+if (isBun){
+    ffi = await import("bun:ffi");
+}
+
+if (!(isDeno || isBun)){
+    throw new Error("Unsupported runtime")
+}
+
+const os = isDeno? Deno.build.os : process.platform;
+const arch = isDeno? Deno.build.arch : process.arch;
 const libNames: Record<string, [string, string]> = {
     windows: ["my-lib-win32", "my_rust_protos.dll"],
+    win32: ["my-lib-win32", "my_rust_protos.dll"],
     linux: ["my-lib-linux", "libmy_rust_protos.so"],
     darwin: ["my-lib-darwin", "libmy_rust_protos.dylib"],
 };
-if (!(Deno.build.os in libNames)) {
-    throw new Error(`Unsupported platform: ${Deno.build.os}`);
+if (!(os in libNames)) {
+    throw new Error(`Unsupported platform: ${os}`);
 }
-let [packageName, libName] = libNames[Deno.build.os];
-packageName += {
+let [packageName, libName] = libNames[os] as [string, string];
+const arch_names: Record<string, string> = {
+    x64: "-x64",
     x86_64: "-x64",
+    arm64: "-arm64",
     aarch64: "-arm64",
-}[Deno.build.arch];
+}
+if (!(arch in arch_names)) {
+    throw new Error(`Unsupported architecture: ${arch}`);
+}
+packageName += arch_names[arch];
 
-export const dylib = Deno.dlopen(
+export const dylib = isDeno?
+Deno.dlopen(
     fileURLToPath(import.meta.resolve(`@lazy_engineer/${packageName}/${libName}`)),
     {
-        free_buffer: { parameters: ["usize", "usize"], result: "void" },
-        rust_protos_greet: { parameters: ["buffer", "usize", "buffer", "buffer"], result: "u32" },
-        create_new_person: { parameters: ["buffer", "buffer", "usize"], result: "u32" },
-        person_greet: { parameters: ["u64", "buffer", "usize", "buffer", "buffer"], result: "u32" },
+        free_buffer: { parameters: ["u64", "u64"], result: "void" },
+        rust_protos_greet: { parameters: ["buffer", "u64", "buffer", "buffer"], result: "u32" },
+        create_new_person: { parameters: ["buffer", "buffer", "u64"], result: "u32" },
+        person_greet: { parameters: ["u64", "buffer", "u64", "buffer", "buffer"], result: "u32" },
         free_person: { parameters: ["u64"], result: "void" },
+    } as const
+)
+:
+ffi.dlopen(
+    fileURLToPath(import.meta.resolve(`@lazy_engineer/${packageName}/${libName}`)),
+    {
+        free_buffer: { args: ["u64", "u64"], returns: "void" },
+        rust_protos_greet: { args: ["buffer", "u64", "buffer", "buffer"], returns: "u32" },
+        create_new_person: { args: ["buffer", "buffer", "u64"], returns: "u32" },
+        person_greet: { args: ["u64", "buffer", "u64", "buffer", "buffer"], returns: "u32" },
+        free_person: { args: ["u64"], returns: "void" },
     } as const
 );
 
@@ -67,12 +100,16 @@ export function funcArgsResult<I,R>(
     const outPtr = new BigUint64Array(1);
     const outLen = new BigUint64Array(1);
     const status = func(buf, BigInt(buf.length), outPtr, outLen);
-    const outBuf = new Uint8Array(Number(outLen[0]));
-    Deno.UnsafePointerView.copyInto(
-        Deno.UnsafePointer.create(outPtr[0]) as Deno.PointerObject,
-        outBuf
+    const outBufArray = isDeno?
+    Deno.UnsafePointerView.getArrayBuffer(
+        Deno.UnsafePointer.create(outPtr[0]) as Deno.PointerObject, Number(outLen[0])
+    )
+    :
+    ffi.toArrayBuffer(
+        Number(outPtr[0]) as ffi.Pointer
     );
-    dylib.symbols.free_buffer(outPtr[0], outLen[0]);
+    const outBuf = new Uint8Array(Buffer.from(outBufArray, 0, Number(outLen[0])));
+    dylib.symbols.free_buffer(outPtr[0] as bigint, outLen[0] as bigint);
     throwErrors(status, outBuf);
     return resultParser.decode(outBuf);
 }
@@ -86,7 +123,7 @@ export function createNewArgs<I>(
     const buf = inputParser.encode(input).finish();
     const instancePtr = new BigUint64Array(1);
     func(instancePtr, buf, BigInt(buf.length));
-    return instancePtr[0];
+    return instancePtr[0] as bigint;
 }
 
 type MethodArgsResultCallback = (instancePtr: bigint, ptr: Uint8Array, len: bigint, outPtr: BigUint64Array, outLen: BigUint64Array) => number;
@@ -101,12 +138,16 @@ export function methodArgsResult<I, R>(
     const outPtr = new BigUint64Array(1);
     const outLen = new BigUint64Array(1);
     const status = func(instancePtr, buf, BigInt(buf.length), outPtr, outLen);
-    const outBuf = new Uint8Array(Number(outLen[0]));
-    Deno.UnsafePointerView.copyInto(
-        Deno.UnsafePointer.create(outPtr[0]) as Deno.PointerObject,
-        outBuf
+    const outBufArray = isDeno?
+    Deno.UnsafePointerView.getArrayBuffer(
+        Deno.UnsafePointer.create(outPtr[0]) as Deno.PointerObject, Number(outLen[0])
+    )
+    :
+    ffi.toArrayBuffer(
+        Number(outPtr[0]) as ffi.Pointer
     );
-    dylib.symbols.free_buffer(outPtr[0], outLen[0]);
+    const outBuf = new Uint8Array(Buffer.from(outBufArray, 0, Number(outLen[0])));
+    dylib.symbols.free_buffer(outPtr[0] as bigint, outLen[0] as bigint);
     throwErrors(status, outBuf);
     return resultParser.decode(outBuf);
 }
@@ -117,4 +158,10 @@ export abstract class ForeignInstance {
         this.instancePtr = instancePtr;
     }
     public abstract dispose(): void;
+}
+
+export function close(): void {
+    if (isDeno){
+        dylib.close()
+    };
 }

@@ -1,14 +1,13 @@
 import { Buffer } from "node:buffer";
-import { fileURLToPath } from "node:url";
 import * as e from "./generated/error.ts";
 
 // Import native build packages for each supported platform
-import * as _darwin_arm64 from "@lazy_engineer/my-lib-darwin-arm64";
-import * as _darwin_x64 from "@lazy_engineer/my-lib-darwin-x64";
-import * as _linux_arm64 from "@lazy_engineer/my-lib-linux-arm64";
-import * as _linux_x64 from "@lazy_engineer/my-lib-linux-x64";
-import * as _win32_arm64 from "@lazy_engineer/my-lib-win32-arm64";
-import * as _win32_x64 from "@lazy_engineer/my-lib-win32-x64";
+import * as darwin_arm64 from "@lazy_engineer/my-lib-darwin-arm64";
+import * as darwin_x64 from "@lazy_engineer/my-lib-darwin-x64";
+import * as linux_arm64 from "@lazy_engineer/my-lib-linux-arm64";
+import * as linux_x64 from "@lazy_engineer/my-lib-linux-x64";
+import * as win32_arm64 from "@lazy_engineer/my-lib-win32-arm64";
+import * as win32_x64 from "@lazy_engineer/my-lib-win32-x64";
 
 let ffi: typeof import("bun:ffi") 
 const isDeno = typeof Deno !== "undefined" && typeof Deno.version !== "undefined";
@@ -23,30 +22,38 @@ if (!(isDeno || isBun)){
 
 const os = isDeno? Deno.build.os : process.platform;
 const arch = isDeno? Deno.build.arch : process.arch;
-const libNames: Record<string, [string, string]> = {
-    windows: ["my-lib-win32", "my_rust_protos.dll"],
-    win32: ["my-lib-win32", "my_rust_protos.dll"],
-    linux: ["my-lib-linux", "libmy_rust_protos.so"],
-    darwin: ["my-lib-darwin", "libmy_rust_protos.dylib"],
-};
-if (!(os in libNames)) {
+const platforms = ['windows', 'win32', 'linux', 'darwin'];
+const archs = ['x64', 'x86_64', 'arm64', 'aarch64']
+if (!(os == 'windows' || os == 'win32' || os == 'linux' || os == 'darwin')) {
     throw new Error(`Unsupported platform: ${os}`);
 }
-let [packageName, libName] = libNames[os] as [string, string];
-const arch_names: Record<string, string> = {
-    x64: "-x64",
-    x86_64: "-x64",
-    arm64: "-arm64",
-    aarch64: "-arm64",
-}
-if (!(arch in arch_names)) {
+if (!(arch == 'x64' || arch == 'x86_64' || arch == 'arm64' || arch == 'aarch64')) {
     throw new Error(`Unsupported architecture: ${arch}`);
 }
-packageName += arch_names[arch];
+let path: string = "";
+if (os == 'windows' || os == 'win32'){
+    if (arch == 'x64' || arch == 'x86_64'){
+        path = win32_x64.path
+    }else{
+        path = win32_arm64.path
+    }
+}else if (os == 'linux'){
+    if (arch == 'x64' || arch == 'x86_64'){
+        path = linux_x64.path
+    }else{
+        path = linux_arm64.path
+    }
+}else{
+    if (arch == 'x64' || arch == 'x86_64'){
+        path = darwin_x64.path
+    }else{
+        path = darwin_arm64.path
+    }
+}
 
 export const dylib = isDeno?
 Deno.dlopen(
-    fileURLToPath(import.meta.resolve(`@lazy_engineer/${packageName}/${libName}`)),
+    path,
     {
         free_buffer: { parameters: ["u64", "u64"], result: "void" },
         rust_protos_greet: { parameters: ["buffer", "u64", "buffer", "buffer"], result: "u32" },
@@ -57,7 +64,7 @@ Deno.dlopen(
 )
 :
 ffi.dlopen(
-    fileURLToPath(import.meta.resolve(`@lazy_engineer/${packageName}/${libName}`)),
+    path,
     {
         free_buffer: { args: ["u64", "u64"], returns: "void" },
         rust_protos_greet: { args: ["buffer", "u64", "buffer", "buffer"], returns: "u32" },

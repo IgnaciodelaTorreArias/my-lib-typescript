@@ -1,6 +1,6 @@
 {
   "name": "@lazy-engineer/my-lib",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "A Deno & Bun library for demonstration purposes",
   "license": "GLWTPL",
   "module": "index.ts",
@@ -25,11 +25,11 @@
     "@bufbuild/protobuf": "^2.6.3"
   },
   "optionalDependencies": {
-    "@lazy_engineer/my-lib-darwin-arm64": "^1.0.0",
-    "@lazy_engineer/my-lib-darwin-x64": "^1.0.0",
-    "@lazy_engineer/my-lib-linux-arm64": "^1.0.0",
-    "@lazy_engineer/my-lib-linux-x64": "^1.0.0",
-    "@lazy_engineer/my-lib-win32-arm64": "^1.0.0",
-    "@lazy_engineer/my-lib-win32-x64": "^1.0.0"
+    "@lazy_engineer/my-lib-darwin-arm64": "^1.0.1",
+    "@lazy_engineer/my-lib-darwin-x64": "^1.0.1",
+    "@lazy_engineer/my-lib-linux-arm64": "^1.0.1",
+    "@lazy_engineer/my-lib-linux-x64": "^1.0.1",
+    "@lazy_engineer/my-lib-win32-arm64": "^1.0.1",
+    "@lazy_engineer/my-lib-win32-x64": "^1.0.1"
   }
 }

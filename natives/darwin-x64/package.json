@@ -1,0 +1,11 @@
+{
+  "name": "@lazy_engineer/my-lib-darwin-x64",
+  "version": "1.0.2",
+  "type": "module",
+  "description": "",
+  "author": "",
+  "os": [ "darwin" ],
+  "cpu": [ "x64" ],
+  "files": [ "index.js", "libmy_rust_protos.dylib" ],
+  "license": "GLWTPL"
+}

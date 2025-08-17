@@ -1,0 +1,12 @@
+{
+  "name": "@lazy_engineer/my-lib-linux-arm64",
+  "version": "1.0.2",
+  "type": "module",
+  "description": "",
+  "author": "",
+  "os": [ "linux" ],
+  "libc": [ "glibc" ],
+  "cpu": [ "arm64" ],
+  "files": [ "index.js", "libmy_rust_protos.so" ],
+  "license": "GLWTPL"
+}

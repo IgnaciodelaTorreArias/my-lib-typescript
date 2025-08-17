@@ -1,0 +1,11 @@
+{
+  "name": "@lazy_engineer/my-lib-win32-x64",
+  "version": "1.0.2",
+  "type": "module",
+  "description": "",
+  "author": "",
+  "os": [ "win32" ],
+  "cpu": [ "x64" ],
+  "files": [ "index.js", "my_rust_protos.dll" ],
+  "license": "GLWTPL"
+}

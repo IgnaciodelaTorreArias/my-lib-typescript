@@ -11,12 +11,12 @@
         "ts-proto": "^2.7.7",
       },
       "optionalDependencies": {
-        "@lazy_engineer/my-lib-darwin-arm64": "^1.0.0",
-        "@lazy_engineer/my-lib-darwin-x64": "^1.0.0",
-        "@lazy_engineer/my-lib-linux-arm64": "^1.0.0",
-        "@lazy_engineer/my-lib-linux-x64": "^1.0.0",
-        "@lazy_engineer/my-lib-win32-arm64": "^1.0.0",
-        "@lazy_engineer/my-lib-win32-x64": "^1.0.0",
+        "@lazy_engineer/my-lib-darwin-arm64": "^1.0.1",
+        "@lazy_engineer/my-lib-darwin-x64": "^1.0.1",
+        "@lazy_engineer/my-lib-linux-arm64": "^1.0.1",
+        "@lazy_engineer/my-lib-linux-x64": "^1.0.1",
+        "@lazy_engineer/my-lib-win32-arm64": "^1.0.1",
+        "@lazy_engineer/my-lib-win32-x64": "^1.0.1",
       },
       "peerDependencies": {
         "typescript": "^5",
@@ -26,17 +26,17 @@
   "packages": {
     "@bufbuild/protobuf": ["@bufbuild/protobuf@2.6.3", "", {}, "sha512-w/gJKME9mYN7ZoUAmSMAWXk4hkVpxRKvEJCb3dV5g9wwWdxTJJ0ayOJAVcNxtdqaxDyFuC0uz4RSGVacJ030PQ=="],
 
-    "@lazy_engineer/my-lib-darwin-arm64": ["@lazy_engineer/my-lib-darwin-arm64@1.0.0", "", { "os": "darwin", "cpu": "arm64" }, "sha512-4P/F2r+UA9EoHKQ/4qTId1vBPV6APNEb+0TQ3pofB9OJ1UFnZ2UbChTqXoDmDRYXZSSk5nqtrDVWCCxaI6/KFQ=="],
+    "@lazy_engineer/my-lib-darwin-arm64": ["@lazy_engineer/my-lib-darwin-arm64@1.0.1", "", { "os": "darwin", "cpu": "arm64" }, "sha512-q5melvKrZaWsuhpYqsVlMKueGm7CVStOcf0BeqO0VfhMrf9JPEfT97JjOFeWM5zHEPxZt22oXgLdU1T0/eHHcw=="],
 
-    "@lazy_engineer/my-lib-darwin-x64": ["@lazy_engineer/my-lib-darwin-x64@1.0.0", "", { "os": "darwin", "cpu": "x64" }, "sha512-WDTm52f9+lc7GF5bH7FbKdDmZPChKRsC3MHfQiz2PWpUqOArt1L4BL6dM4DYnIGD4s9q9Br1flYJigdGBLVUWQ=="],
+    "@lazy_engineer/my-lib-darwin-x64": ["@lazy_engineer/my-lib-darwin-x64@1.0.1", "", { "os": "darwin", "cpu": "x64" }, "sha512-tF+E0Ut8TMue4RfisxjzphVyOQaEAkLU6NGHkFkNO8mTRAYiQqSXM9F6EktqwIpMcS3GuU/0ReOCH1LhKsLiEg=="],
 
-    "@lazy_engineer/my-lib-linux-arm64": ["@lazy_engineer/my-lib-linux-arm64@1.0.0", "", { "os": "linux", "cpu": "arm64" }, "sha512-VaU7+yfsHvdRH52wEsIUeNUqf9KojWuqvDYBxjsxRCRdsSfEFUTczLZiPQ9QvNSjkGm9HAKrXhTfjT99B7SjOA=="],
+    "@lazy_engineer/my-lib-linux-arm64": ["@lazy_engineer/my-lib-linux-arm64@1.0.1", "", { "os": "linux", "cpu": "arm64" }, "sha512-MA4ZBwYUDkOxDnmqeFYZSdSIVVYR6ELI3Iw7L6ylEzUtxHGwYkIb6fxeOHIOQ3rO6UZHsDkWelRtRlkdTVtLsg=="],
 
-    "@lazy_engineer/my-lib-linux-x64": ["@lazy_engineer/my-lib-linux-x64@1.0.0", "", { "os": "linux", "cpu": "x64" }, "sha512-A1Ta/txrBgnZEa7fCcm5iRuOpEHIOF7zZJfPD3so7l8yeOmEja54D+U6HIH616X0BUVJBn6r/wJtIcPMQTic/A=="],
+    "@lazy_engineer/my-lib-linux-x64": ["@lazy_engineer/my-lib-linux-x64@1.0.1", "", { "os": "linux", "cpu": "x64" }, "sha512-hIfbR7LCwgTqmMNhodZmCvW/0lWSBnQaHwdpKcKoPz+kNZdhaN3KSrTFI7ldM2+SBu6/QrLRGCXfXORMWuqZCw=="],
 
-    "@lazy_engineer/my-lib-win32-arm64": ["@lazy_engineer/my-lib-win32-arm64@1.0.0", "", { "os": "win32", "cpu": "arm64" }, "sha512-NxN3OPg4lVRr0DuYROKa3mrNbZsEhUs8NCUCl1Q3jdQTWCGubtqNWHL7h2PYcKCLAoXh9QRYh+qGowa0q8lKdQ=="],
+    "@lazy_engineer/my-lib-win32-arm64": ["@lazy_engineer/my-lib-win32-arm64@1.0.1", "", { "os": "win32", "cpu": "arm64" }, "sha512-o6Hkf3LNSSDgeCdBBIlL+lDCQI1xQ+APaUNP1jXVV0UY6oDeCBmx/hHti/5P4FMlbtQ/2lUzvR1z/EFmi/i1jw=="],
 
-    "@lazy_engineer/my-lib-win32-x64": ["@lazy_engineer/my-lib-win32-x64@1.0.0", "", { "os": "win32", "cpu": "x64" }, "sha512-Rg9ljxFEvFvxvuPsQJjKjWaUV3xXggkuieaaV25bf1ci0A5nsS8IdQQOEl+MeWPi7IShNsWsyeAXiuQR0UfhGg=="],
+    "@lazy_engineer/my-lib-win32-x64": ["@lazy_engineer/my-lib-win32-x64@1.0.1", "", { "os": "win32", "cpu": "x64" }, "sha512-INBcIOATaqBvgn5BNQxBouBmduXRysoxz4j6NaSg5qTIOjGRGVNUSHOQsNNpsFn0nQqFyNIznyMPJ82oylm9sQ=="],
 
     "@types/bun": ["@types/bun@1.2.20", "", { "dependencies": { "bun-types": "1.2.20" } }, "sha512-dX3RGzQ8+KgmMw7CsW4xT5ITBSCrSbfHc36SNT31EOUg/LA9JWq0VDdEXDRSe1InVWpd2yLUM1FUF/kEOyTzYA=="],
 

@@ -2,12 +2,6 @@ import { Buffer } from "node:buffer";
 import * as e from "./generated/error.ts";
 
 // Import native build packages for each supported platform
-const darwin_arm64 = await import("@lazy_engineer/my-lib-darwin-arm64");
-const darwin_x64 = await import("@lazy_engineer/my-lib-darwin-x64");
-const linux_arm64 = await import("@lazy_engineer/my-lib-linux-arm64");
-const linux_x64 = await import("@lazy_engineer/my-lib-linux-x64");
-const win32_arm64 = await import("@lazy_engineer/my-lib-win32-arm64");
-const win32_x64 = await import("@lazy_engineer/my-lib-win32-x64");
 
 let ffi: typeof import("bun:ffi") 
 const isDeno = typeof Deno !== "undefined" && typeof Deno.version !== "undefined";
@@ -33,20 +27,26 @@ if (!(arch == 'x64' || arch == 'x86_64' || arch == 'arm64' || arch == 'aarch64')
 let path: string = "";
 if (os == 'windows' || os == 'win32'){
     if (arch == 'x64' || arch == 'x86_64'){
+        const win32_x64 = await import("@lazy_engineer/my-lib-win32-x64");
         path = win32_x64.path
     }else{
+        const win32_arm64 = await import("@lazy_engineer/my-lib-win32-arm64");
         path = win32_arm64.path
     }
 }else if (os == 'linux'){
     if (arch == 'x64' || arch == 'x86_64'){
+        const linux_x64 = await import("@lazy_engineer/my-lib-linux-x64");
         path = linux_x64.path
     }else{
+        const linux_arm64 = await import("@lazy_engineer/my-lib-linux-arm64");
         path = linux_arm64.path
     }
 }else{
     if (arch == 'x64' || arch == 'x86_64'){
+        const darwin_x64 = await import("@lazy_engineer/my-lib-darwin-x64");
         path = darwin_x64.path
     }else{
+        const darwin_arm64 = await import("@lazy_engineer/my-lib-darwin-arm64");
         path = darwin_arm64.path
     }
 }
